@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+    <!--    <link rel="stylesheet" th:href="@{/css/page/home.css}" >-->
+    <style type="text/css">
+        .divText {
+            border: 3px solid #ccc;
+            margin: 10px;
+            padding: 20px;
+            border-radius: 10px;
+            /*width: 300px;*/
+            overflow: auto;
+            resize: both;
+        }
+    </style>
+</th:block>
+
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <!--    <script th:src="@{/js/page/home.js}"></script>-->
+    <script>
+        function openTextFile() {
+            var input = document.createElement("input");
+            input.type = "file";
+            input.accept = "text/plain"; // 확장자가 xxx, yyy 일때, ".xxx, .yyy"
+            input.onchange = function (event) {
+                processFile(event.target.files[0]);
+            };
+            input.click();
+        }
+        function processFile(file) {
+            var reader = new FileReader();
+            reader.onload = function () {
+                output.innerText = reader.result;
+            };
+            reader.readAsText(file, /* optional */ "euc-kr");
+        }
+
+        function textClear() {
+            var element1 = document.getElementById('output');
+            element1.innerText = '';
+        }
+
+    </script>
+</th:block>
+<head>
+    <meta charset="utf-8">
+    <title>Secure</title>
+
+
+</head>
+
+<body>
+<div layout:fragment="content">
+
+<button onclick='openTextFile()'>Open</button>
+<div class="divText" id='output'>파일을 선택 하시면 미리보기가 실행됩니다.</div>
+
+<button onclick='textClear()'>취소</button>
+
+</div>
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+
+
+
+
+<!-- Content -->
+
+</html>

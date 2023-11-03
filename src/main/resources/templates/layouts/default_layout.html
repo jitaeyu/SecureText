@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lagn="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <style>
+        header{
+            border-radius: 13px;
+            background-color: #388168;
+            /*border-top: 1px solid #e4e4e4;*/
+            /*background-color:#f8f9fa;*/
+            padding:2rem 0;
+            color: #cccccc;
+            /*margin:-1rem;*/
+            /*position : fixed;*/
+            top : 0;
+            left:0;
+            font-size: 1.8rem;
+            text-align: center;
+            width: -webkit-fill-available;
+        }
+        footer{
+            border-top: 1px solid #e4e4e4;
+            background-color:#f8f9fa;
+            padding:1rem 0;
+            /*margin:1rem 0;*/
+            position : absolute;
+            bottom : 0;
+            left:0;
+            width: -webkit-fill-available;
+        }
+    </style>
+    <meta charset="UTF-8" />
+    <title>thymeleaf layout</title>
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0, minimum-scale=1, user-scalable=yes,initial-scale=1.0" />
+    <!-- content script -->
+    <th:block layout:fragment="css">
+        <th:block layout:fragment="css"></th:block>
+    </th:block>
+    <!-- content script -->
+    <th:block layout:fragment="script"></th:block>
+</head>
+<body>
+<!-- header fragment 사용 -->
+<th:block th:replace="fragments/header :: headerFragment"></th:block>
+<!-- content fragment 사용 -->
+<th:block layout:fragment="content"></th:block>
+<!-- footer fragment 사용 -->
+<th:block th:replace="fragments/footer :: footerFragment">
+
+    </th:block>
+</th:block>
+</body>
+</html>
