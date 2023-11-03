@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html  lagn="ko"
+        xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
@@ -28,27 +29,96 @@
             input.type = "file";
             input.accept = "text/plain"; // 확장자가 xxx, yyy 일때, ".xxx, .yyy"
             input.onchange = function (event) {
-                processFile(event.target.files[0]);
+                // processFile(event.target.files[0]);
+                processFile2(event.target.files[0]);
+                processFile1(event.target.files[0]);
             };
             input.click();
+
         }
-        function processFile(file) {
+        function processFile1(file) {
             var reader = new FileReader();
             reader.onload = function () {
                 output.innerText = reader.result;
+
+
+
+                console.log(reader.result);
+
             };
-            reader.readAsText(file, /* optional */ "euc-kr");
+            reader.readAsText(file, /* optional */ "utf-8");
+
         }
+
+
+        function processFile2(file) {
+            var reader = new FileReader();
+            reader.onload = function () {
+                var dataToSend = reader.result; // reader.result 값을 변수에 저장
+
+                console.log(dataToSend); // reader.result를 콘솔에 출력
+
+                // 데이터를 JSON 문자열로 직렬화
+                var jsonData = JSON.stringify({ content: dataToSend });
+
+                // AJAX 요청 보내기
+                fetch('http://localhost:8080/read', {
+                    method: 'POST', // 또는 다른 HTTP 메소드를 선택하세요
+                    body: jsonData, // JSON 문자열을 요청 본문에 넣기
+                    headers: {
+                        'Content-Type': 'application/json', // JSON 데이터인 경우 Content-Type 설정
+                    },
+                })
+                    .then(response => {
+                        // 서버 응답 처리
+                        if (response.ok) {
+                            // 성공적으로 응답 받았을 때 수행할 동작
+                            alert("suc")
+                        } else {
+                            alert("err")
+                            // 오류 처리
+                        }
+                    })
+                    .catch(error => {
+                        // 네트워크 오류 처리
+                    });
+            };
+            reader.readAsText(file, /* optional */ "utf-8");
+        }
+
 
         function textClear() {
             var element1 = document.getElementById('output');
             element1.innerText = '';
         }
 
+
+
+
+
+
+
+        // $(document).ready(function(){
+        //     $.ajax({
+        //         type: 'get',   //get방식으로 명시
+        //         url : 'http://localhost:8080/read',  //이동할 jsp 파일 주소
+        //         dataType:'text',   //문자형식으로 받기
+        //         data: {
+        //
+        //         },
+        //         success: function(data){   //데이터 주고받기 성공했을 경우 실행할 결과
+        //             //function(data)를 쓰게 되면 전달받은 데이터가 data안에 담아서 들어오게 된다.
+        //             alert(data);
+        //         },
+        //         error:function(){   //데이터 주고받기가 실패했을 경우 실행할 결과
+        //             alert('실패');
+        //         }
+        //     })
+        // });
     </script>
 </th:block>
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Secure</title>
 
 
@@ -58,11 +128,23 @@
 <div layout:fragment="content">
 
 <button onclick='openTextFile()'>Open</button>
-<div class="divText" id='output'>파일을 선택 하시면 미리보기가 실행됩니다.</div>
 
+
+    <form action="read" method="get" >
+
+<div name="text" class="divText" id='output'>파일을 선택 하시면 미리보기가 실행됩니다.</div>
+        <button type="submit">변환시작</button>
+
+    </form>
 <button onclick='textClear()'>취소</button>
 
 </div>
+
+
+<!--    <div type="input" name="text" class="divText" id='output'>파일을 선택 하시면 미리보기가 실행됩니다.</div>-->
+<!--    <input type="text">-->
+
+
 </body>
 </html>
 
