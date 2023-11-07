@@ -29,7 +29,7 @@ public class MainContorller {
 
     @ResponseBody
     @RequestMapping(value = "/read", method = { RequestMethod.POST })
-    public void test(@RequestBody Object dto) throws Exception {
+    public List<Integer> test(@RequestBody Object dto) throws Exception {
 //        int i =0;
         String jsonString = dto.toString();
 //        System.out.println("dto"+dto);
@@ -48,7 +48,8 @@ public class MainContorller {
                 System.out.println("문자: " + character + ", ASCII 코드+1암호화: " + ((int)ascii+1));
 //                asc=newline[i].split("");
 //                System.out.println("start"+asc+"아스키:");
-                list.add(ascii);
+                list.add((int)ascii+1);
+
             }
         }
         List<Character> bs = new ArrayList<>();
@@ -65,5 +66,6 @@ public class MainContorller {
 //        }
 //        System.out.println(dto);
         System.out.println("들어옴 read");
+        return list;
     }
 }

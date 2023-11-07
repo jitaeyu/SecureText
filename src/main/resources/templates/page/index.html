@@ -25,6 +25,7 @@
     <!--    <script th:src="@{/js/page/home.js}"></script>-->
     <script>
         function openTextFile() {
+            textClear();
             var input = document.createElement("input");
             input.type = "file";
             input.accept = "text/plain"; // 확장자가 xxx, yyy 일때, ".xxx, .yyy"
@@ -72,10 +73,26 @@
                     .then(response => {
                         // 서버 응답 처리
                         if (response.ok) {
+                            response.json().then(function (res) {
+                                console.log(res);
+
+                                var output2Div = document.getElementById("output2");
+                                // 리스트 항목을 문자열로 결합하여 <div>의 innerText에 할당
+                                output2Div.innerText = res.join(', '); // 예: 항목 간에 쉼표로 구분
+
+
+                                // var newDiv = document.createElement('div');
+                                // for (var i = 0; i < res.length; i++) {
+                                //     newDiv.innerText = res[i]; // 리스트 항목을 <div>의 innerText에 할당
+                                //     document.body.appendChild(newDiv); // <div>를 문서에 추가
+                                // }
+
+                            })
                             // 성공적으로 응답 받았을 때 수행할 동작
-                            alert("suc")
+                            alert("암호화가 완료되었습니다 미리보기가 실행됩니다.")
+
+
                         } else {
-                            alert("err")
                             // 오류 처리
                         }
                     })
@@ -89,7 +106,9 @@
 
         function textClear() {
             var element1 = document.getElementById('output');
+            var element2 = document.getElementById('output2');
             element1.innerText = '';
+            element2.innerText = '';
         }
 
 
@@ -120,22 +139,28 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Secure</title>
-
+<style>
+    #content{
+        min-height: calc(100vh - 10rem); /* footer 높이를 빼준다. */
+    }
+</style>
 
 </head>
 
 <body>
-<div layout:fragment="content">
+<div id="content" layout:fragment="content">
 
 <button onclick='openTextFile()'>Open</button>
 
 
-    <form action="read" method="get" >
+<!--    <form action="read" method="get" >-->
 
 <div name="text" class="divText" id='output'>파일을 선택 하시면 미리보기가 실행됩니다.</div>
-        <button type="submit">변환시작</button>
+    <div name="text2" class="divText" id='output2'>암호화 시 미리보기</div>
+<!--        <button type="submit">변환시작</button>-->
 
-    </form>
+<!--    </form>-->
+
 <button onclick='textClear()'>취소</button>
 
 </div>
