@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html  lagn="ko"
-        xmlns="http://www.w3.org/1999/xhtml"
+<html lagn="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
@@ -37,11 +37,11 @@
             input.click();
 
         }
+
         function processFile1(file) {
             var reader = new FileReader();
             reader.onload = function () {
                 output.innerText = reader.result;
-
 
 
                 console.log(reader.result);
@@ -60,7 +60,7 @@
                 console.log(dataToSend); // reader.result를 콘솔에 출력
 
                 // 데이터를 JSON 문자열로 직렬화
-                var jsonData = JSON.stringify({ content: dataToSend });
+                var jsonData = JSON.stringify({content: dataToSend});
 
                 // AJAX 요청 보내기
                 fetch('http://localhost:8080/read', {
@@ -89,7 +89,7 @@
 
                             })
                             // 성공적으로 응답 받았을 때 수행할 동작
-                            alert("암호화가 완료되었습니다 미리보기가 실행됩니다.")
+                            alert("암호화가 완료되었습니다. 미리보기와 파일 생성이 진행됩니다.")
 
 
                         } else {
@@ -112,11 +112,6 @@
         }
 
 
-
-
-
-
-
         // $(document).ready(function(){
         //     $.ajax({
         //         type: 'get',   //get방식으로 명시
@@ -137,31 +132,31 @@
     </script>
 </th:block>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Secure</title>
-<style>
-    #content{
-        min-height: calc(100vh - 10rem); /* footer 높이를 빼준다. */
-    }
-</style>
+    <style>
+        #content {
+            min-height: calc(100vh - 10rem); /* footer 높이를 빼준다. */
+        }
+    </style>
 
 </head>
 
 <body>
 <div id="content" layout:fragment="content">
-
-<button onclick='openTextFile()'>Open</button>
-
-
-<!--    <form action="read" method="get" >-->
-
-<div name="text" class="divText" id='output'>파일을 선택 하시면 미리보기가 실행됩니다.</div>
+    
+    <button onclick='openTextFile()'>Open</button>
+    
+    
+    <!--    <form action="read" method="get" >-->
+    
+    <div name="text" class="divText" id='output'>파일을 선택 하시면 미리보기가 실행됩니다.</div>
     <div name="text2" class="divText" id='output2'>암호화 시 미리보기</div>
-<!--        <button type="submit">변환시작</button>-->
-
-<!--    </form>-->
-
-<button onclick='textClear()'>취소</button>
+    <!--        <button type="submit">변환시작</button>-->
+    
+    <!--    </form>-->
+    
+    <button onclick='textClear()'>취소</button>
 
 </div>
 
@@ -174,10 +169,7 @@
 </html>
 
 
-
 <!DOCTYPE html>
-
-
 
 
 <!-- Content -->
