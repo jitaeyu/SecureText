@@ -1,177 +1,197 @@
 <!DOCTYPE html>
 <html lagn="ko"
-      xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/default_layout}">
-<!-- index.html 고유 CSS 추가 -->
-<th:block layout:fragment="css">
-    <!--    <link rel="stylesheet" th:href="@{/css/page/home.css}" >-->
-    <style type="text/css">
-        .divText {
-            border: 3px solid #ccc;
-            margin: 10px;
-            padding: 20px;
-            border-radius: 10px;
-            /*width: 300px;*/
-            overflow: auto;
-            resize: both;
-        }
-    </style>
-</th:block>
-
-<!-- index.html 고유 스크립트 추가 -->
-<th:block layout:fragment="script">
-    <!--    <script th:src="@{/js/page/home.js}"></script>-->
-    <script>
-        function openTextFile() {
-            textClear();
-            var input = document.createElement("input");
-            input.type = "file";
-            input.accept = "text/plain"; // 확장자가 xxx, yyy 일때, ".xxx, .yyy"
-            input.onchange = function (event) {
-                // processFile(event.target.files[0]);
-                processFile2(event.target.files[0]);
-                processFile1(event.target.files[0]);
-            };
-            input.click();
-
-        }
-
-        function processFile1(file) {
-            var reader = new FileReader();
-            reader.onload = function () {
-                output.innerText = reader.result;
-
-
-                console.log(reader.result);
-
-            };
-            reader.readAsText(file, /* optional */ "utf-8");
-
-        }
-
-
-        function processFile2(file) {
-            var reader = new FileReader();
-            reader.onload = function () {
-                var dataToSend = reader.result; // reader.result 값을 변수에 저장
-
-                console.log(dataToSend); // reader.result를 콘솔에 출력
-
-                // 데이터를 JSON 문자열로 직렬화
-                var jsonData = JSON.stringify({content: dataToSend});
-
-                // AJAX 요청 보내기
-                fetch('http://localhost:8080/read', {
-                    method: 'POST', // 또는 다른 HTTP 메소드를 선택하세요
-                    body: jsonData, // JSON 문자열을 요청 본문에 넣기
-                    headers: {
-                        'Content-Type': 'application/json', // JSON 데이터인 경우 Content-Type 설정
-                    },
-                })
-                    .then(response => {
-                        // 서버 응답 처리
-                        if (response.ok) {
-                            response.json().then(function (res) {
-                                console.log(res);
-
-                                var output2Div = document.getElementById("output2");
-                                // 리스트 항목을 문자열로 결합하여 <div>의 innerText에 할당
-                                output2Div.innerText = res.join(', '); // 예: 항목 간에 쉼표로 구분
-
-
-                                // var newDiv = document.createElement('div');
-                                // for (var i = 0; i < res.length; i++) {
-                                //     newDiv.innerText = res[i]; // 리스트 항목을 <div>의 innerText에 할당
-                                //     document.body.appendChild(newDiv); // <div>를 문서에 추가
-                                // }
-
-                            })
-                            // 성공적으로 응답 받았을 때 수행할 동작
-                            alert("암호화가 완료되었습니다. 미리보기와 파일 생성이 진행됩니다.")
-
-
-                        } else {
-                            // 오류 처리
-                        }
-                    })
-                    .catch(error => {
-                        // 네트워크 오류 처리
-                    });
-            };
-            reader.readAsText(file, /* optional */ "utf-8");
-        }
-
-
-        function textClear() {
-            var element1 = document.getElementById('output');
-            var element2 = document.getElementById('output2');
-            element1.innerText = '';
-            element2.innerText = '';
-        }
-
-
-        // $(document).ready(function(){
-        //     $.ajax({
-        //         type: 'get',   //get방식으로 명시
-        //         url : 'http://localhost:8080/read',  //이동할 jsp 파일 주소
-        //         dataType:'text',   //문자형식으로 받기
-        //         data: {
-        //
-        //         },
-        //         success: function(data){   //데이터 주고받기 성공했을 경우 실행할 결과
-        //             //function(data)를 쓰게 되면 전달받은 데이터가 data안에 담아서 들어오게 된다.
-        //             alert(data);
-        //         },
-        //         error:function(){   //데이터 주고받기가 실패했을 경우 실행할 결과
-        //             alert('실패');
-        //         }
-        //     })
-        // });
-    </script>
-</th:block>
+      xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Secure</title>
+    <meta charset="UTF-8">
     <style>
-        #content {
-            min-height: calc(100vh - 10rem); /* footer 높이를 빼준다. */
+        @import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Raleway, sans-serif;
         }
+        
+        body {
+            background: linear-gradient(90deg, #C7C5F4, #776BCC);
+        }
+        
+        h3 {
+            text-align: center;
+            margin-top: 4em;
+            margin-bottom: 4em;
+            
+        }
+        
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        
+        .screen {
+            background: linear-gradient(90deg, #5D54A4, #7C78B8);
+            position: relative;
+            height: 600px;
+            width: 360px;
+            box-shadow: 0px 0px 24px #5C5696;
+        }
+        
+        .screen__content {
+            z-index: 1;
+            position: relative;
+            height: 100%;
+        }
+        
+        .screen__background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 0;
+            -webkit-clip-path: inset(0 0 0 0);
+            clip-path: inset(0 0 0 0);
+        }
+        
+        .screen__background__shape {
+            transform: rotate(45deg);
+            position: absolute;
+        }
+        
+        .screen__background__shape1 {
+            height: 520px;
+            width: 520px;
+            background: #FFF;
+            top: -50px;
+            right: 120px;
+            border-radius: 0 72px 0 0;
+        }
+        
+        .screen__background__shape2 {
+            height: 220px;
+            width: 220px;
+            background: #6C63AC;
+            top: -172px;
+            right: 0;
+            border-radius: 32px;
+        }
+        
+        .screen__background__shape3 {
+            height: 540px;
+            width: 190px;
+            background: linear-gradient(270deg, #5D54A4, #6A679E);
+            top: -24px;
+            right: 0;
+            border-radius: 32px;
+        }
+        
+        .screen__background__shape4 {
+            height: 400px;
+            width: 200px;
+            background: #7E7BB9;
+            top: 420px;
+            right: 50px;
+            border-radius: 60px;
+        }
+        
+        .login__submit {
+            text-align: center;
+            background: #fff;
+            font-size: 14px;
+            margin-top: 30px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 15px 16px 16px 20px;
+            border-radius: 26px;
+            border: 1px solid #D4D3E8;
+            /*text-transform: uppercase;*/
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            width: 65%;
+            color: #4C489D;
+            box-shadow: 0px 2px 2px #5C5696;
+            /*cursor: pointer;*/
+            /*transition: .2s;*/
+        }
+        
+        .login__submit:active,
+        .login__submit:focus,
+        .login__submit:hover {
+            border-color: #6A679E;
+            outline: none;
+        }
+        
+        .button__icon {
+            font-size: 24px;
+            margin-left: 5em;
+            color: #7875B5;
+        }
+        
+        .social-login {
+            position: absolute;
+            height: 140px;
+            width: 160px;
+            text-align: center;
+            bottom: 0px;
+            right: 0px;
+            color: #fff;
+        }
+        
+        .social-icons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .social-login__icon {
+            padding: 20px 10px;
+            color: #fff;
+            text-decoration: none;
+            text-shadow: 0px 0px 8px #7875B5;
+        }
+        
+        .social-login__icon:hover {
+            transform: scale(1.5);
+        }
+    
     </style>
+    <title>Title</title>
 
 </head>
-
 <body>
-<div id="content" layout:fragment="content">
-    
-    <button onclick='openTextFile()'>Open</button>
-    
-    
-    <!--    <form action="read" method="get" >-->
-    
-    <div name="text" class="divText" id='output'>파일을 선택 하시면 미리보기가 실행됩니다.</div>
-    <div name="text2" class="divText" id='output2'>암호화 시 미리보기</div>
-    <!--        <button type="submit">변환시작</button>-->
-    
-    <!--    </form>-->
-    
-    <button onclick='textClear()'>취소</button>
 
+<div class="container">
+    <div class="screen">
+        <div class="screen__content">
+            <h3>File Secure</h3>
+            <button onclick="location.href='/encryption'" class="button login__submit">
+                <span class="button__text">파일 암호화</span>
+                <i class="button__icon fas fa-chevron-right"></i>
+            </button>
+            <button onclick="location.href='/decryption'" class="button login__submit">
+                <span class="button__text">파일 복호화</span>
+                <i class="button__icon fas fa-chevron-right"></i>
+            </button>
+            <div class="social-login">
+                <h5>&#128231; yjt3602@gmail.com</h5>
+                <div class="social-icons">
+                    <a href="#" class="social-login__icon fab fa-instagram"></a>
+                    <a href="#" class="social-login__icon fab fa-facebook"></a>
+                    <a href="#" class="social-login__icon fab fa-twitter"></a>
+                </div>
+            </div>
+        </div>
+        <div class="screen__background">
+            <span class="screen__background__shape screen__background__shape4"></span>
+            <span class="screen__background__shape screen__background__shape3"></span>
+            <span class="screen__background__shape screen__background__shape2"></span>
+            <span class="screen__background__shape screen__background__shape1"></span>
+        </div>
+    </div>
 </div>
-
-
-<!--    <div type="input" name="text" class="divText" id='output'>파일을 선택 하시면 미리보기가 실행됩니다.</div>-->
-<!--    <input type="text">-->
-
-
 </body>
-</html>
-
-
-<!DOCTYPE html>
-
-
-<!-- Content -->
-
 </html>

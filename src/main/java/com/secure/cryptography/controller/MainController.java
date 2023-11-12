@@ -8,13 +8,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class MainContorller {
+public class MainController {
 
     FileDownload fileDownload = new FileDownload();
 
     @GetMapping("/")
     public String index() {
         return "page/index";
+    }
+    @GetMapping("/encryption")
+    public String encryption() {
+        return "page/encryption";
+    }
+    @GetMapping("/decryption")
+    public String decryption() {
+        return "page/decryption";
     }
 
 //    @PostMapping("/read")
