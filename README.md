@@ -1,17 +1,16 @@
 # SecureText
 
 * 1.1 개발환경    
- 1) 프레임워크 : Springboot 2.7.18 
- 2) 라이브러리 : jackson
- 2) 템플릿 : thymeleaf
+ 1) 프레임워크 : Springboot 2.7.18        
+ 2) 라이브러리 : jackson  
+ 3) 템플릿 : thymeleaf           
  4) JDK : JAVA 11SE    
  5) Build : Gradle   
  6) Front : HTML5 , CSS3 , JavaScript 1.0    
- 7) tools : Intellij , VScode , GitBash
+ 7) tools : Intellij , VScode , GitBash    
  8) 버전관리 : GitHub    
 
 * 1.2 프로젝트 기능
-
 
    1) 파일 보관시 중요 내용이 속한 문서 암호화
    
@@ -21,10 +20,10 @@
    
    4) 복호화 시 암호화된 파일을 넣어 복호화를 진행함
    
-   5) 아스키코드 +1로 변환된 파일의 숫자르들을 아스키코드-1로 복호화 함
+   5) 아스키코드 +1로 변환된 파일의 숫자들을 아스키코드-1로 복호화 함
 
 
-* 메인 페이지 분기 완료
+* 메인 페이지
 ![image](https://github.com/jitaeyu/EcCar/assets/84373336/b3485581-ddeb-4f6d-993b-3fed2924cfa7)
 
 Text파일 불러오기 작업 진행
